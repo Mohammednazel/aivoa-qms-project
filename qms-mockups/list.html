@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QMS Event Listing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">QMS Event Dashboard</h1>
+                <p class="text-gray-500 mt-1">View, filter, and manage all quality events.</p>
+            </div>
+            <a href="./wizard.html" class="mt-4 md:mt-0 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition">
+                + Create New Event
+            </a>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label for="search" class="text-sm font-medium text-gray-600">Search</label>
+                    <input type="text" id="search" placeholder="Search by title or ID..." class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                </div>
+                <div>
+                    <label for="filter-status" class="text-sm font-medium text-gray-600">Status</label>
+                    <select id="filter-status" class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                        <option>All</option>
+                        <option>Open</option>
+                        <option>In Progress</option>
+                        <option>Pending Review</option>
+                        <option>Closed</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter-type" class="text-sm font-medium text-gray-600">Event Type</label>
+                    <select id="filter-type" class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                        <option>All</option>
+                        <option>Deviation</option>
+                        <option>CAPA</option>
+                        <option>Change Control</option>
+                    </select>
+                </div>
+                 <div>
+                    <label for="filter-severity" class="text-sm font-medium text-gray-600">Severity</label>
+                    <select id="filter-severity" class="mt-1 w-full p-2 border border-gray-300 rounded-md">
+                        <option>All</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Table -->
+        <div class="bg-white rounded-lg shadow-sm overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="p-4 text-sm font-semibold text-gray-600">Event ID</th>
+                        <th class="p-4 text-sm font-semibold text-gray-600">Title</th>
+                        <th class="p-4 text-sm font-semibold text-gray-600">Type</th>
+                        <th class="p-4 text-sm font-semibold text-gray-600">Status</th>
+                        <th class="p-4 text-sm font-semibold text-gray-600">Due Date</th>
+                        <th class="p-4 text-sm font-semibold text-gray-600">Severity</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    <!-- Sample Row 1 -->
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-medium text-gray-800"><a href="./detail.html" class="text-blue-600 hover:underline">DEV-001</a></td>
+                        <td class="p-4 text-gray-700">Temperature Excursion in Warehouse A</td>
+                        <td class="p-4 text-gray-700">Deviation</td>
+                        <td class="p-4"><span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Open</span></td>
+                        <td class="p-4 text-gray-700">2025-09-15</td>
+                        <td class="p-4"><span class="text-red-600 font-semibold">High</span></td>
+                    </tr>
+                    <!-- Sample Row 2 -->
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-medium text-gray-800"><a href="./detail.html" class="text-blue-600 hover:underline">CAPA-001</a></td>
+                        <td class="p-4 text-gray-700">Implement New Calibration for Temp Alarms</td>
+                        <td class="p-4 text-gray-700">CAPA</td>
+                        <td class="p-4"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">In Progress</span></td>
+                        <td class="p-4 text-gray-700">2025-10-01</td>
+                        <td class="p-4"><span class="text-yellow-600 font-semibold">Medium</span></td>
+                    </tr>
+                    <!-- Sample Row 3 -->
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-medium text-gray-800"><a href="./detail.html" class="text-blue-600 hover:underline">CC-001</a></td>
+                        <td class="p-4 text-gray-700">Change of Supplier for Raw Material B</td>
+                        <td class="p-4 text-gray-700">Change Control</td>
+                        <td class="p-4"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Closed</span></td>
+                        <td class="p-4 text-gray-700">2025-08-20</td>
+                        <td class="p-4"><span class="text-green-600 font-semibold">Low</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

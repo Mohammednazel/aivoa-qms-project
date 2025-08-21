@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QMS Event Creation Wizard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom transition for the progress bar */
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8 space-y-8">
+        <!-- Header -->
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">Create New QMS Event</h1>
+            <p class="text-gray-500 mt-1">Follow the steps to accurately document the quality event.</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-2">
+            <div class="flex justify-between text-sm font-medium text-gray-600">
+                <p>Step <span id="current-step-text">1</span> of 3</p>
+                <p id="step-name">Event Details</p>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div id="progress-bar" class="bg-blue-600 h-2 rounded-full progress-bar-fill" style="width: 33.33%"></div>
+            </div>
+        </div>
+
+        <!-- Form Steps -->
+        <form id="qms-wizard-form">
+            <!-- Step 1: Event Details -->
+            <div id="step-1" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="event-type" class="block text-sm font-medium text-gray-700">Event Type</label>
+                        <select id="event-type" name="event-type" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option>Deviation</option>
+                            <option>CAPA</option>
+                            <option>Change Control</option>
+                            <option>Audit Finding</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="initiator" class="block text-sm font-medium text-gray-700">Initiator</label>
+                        <input type="text" id="initiator" name="initiator" value="Nazel" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100" readonly>
+                    </div>
+                </div>
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Event Title</label>
+                    <input type="text" id="title" name="title" placeholder="e.g., Temperature Excursion in Warehouse A" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Provide a detailed description of the event..." class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+            </div>
+
+            <!-- Step 2: Classification & Impact -->
+            <div id="step-2" class="hidden space-y-6">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
+                        <select id="department" name="department" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option>Quality Assurance</option>
+                            <option>Manufacturing</option>
+                            <option>Research & Development</option>
+                            <option>Logistics</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700">Initial Status</label>
+                        <input type="text" id="status" name="status" value="Open" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 bg-gray-100" readonly>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Severity</label>
+                        <div class="mt-2 flex space-x-4">
+                           <label class="flex items-center"><input type="radio" name="severity" value="low" class="h-4 w-4 text-blue-600 border-gray-300"> <span class="ml-2 text-gray-700">Low</span></label>
+                           <label class="flex items-center"><input type="radio" name="severity" value="medium" class="h-4 w-4 text-blue-600 border-gray-300"> <span class="ml-2 text-gray-700">Medium</span></label>
+                           <label class="flex items-center"><input type="radio" name="severity" value="high" class="h-4 w-4 text-blue-600 border-gray-300"> <span class="ml-2 text-gray-700">High</span></label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Priority</label>
+                        <div class="mt-2 flex space-x-4">
+                           <label class="flex items-center"><input type="radio" name="priority" value="low" class="h-4 w-4 text-blue-600 border-gray-300"> <span class="ml-2 text-gray-700">Low</span></label>
+                           <label class="flex items-center"><input type="radio" name="priority" value="medium" class="h-4 w-4 text-blue-600 border-gray-300"> <span class="ml-2 text-gray-700">Medium</span></label>
+                           <label class="flex items-center"><input type="radio" name="priority" value="high" class="h-4 w-4 text-blue-600 border-gray-300"> <span class="ml-2 text-gray-700">High</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Attachments & Submission -->
+            <div id="step-3" class="hidden space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Attachments</label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                            <div class="flex text-sm text-gray-600">
+                                <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                    <span>Upload a file</span>
+                                    <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">PNG, JPG, PDF up to 10MB</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="responsible-parties" class="block text-sm font-medium text-gray-700">Responsible Parties</label>
+                    <input type="text" id="responsible-parties" name="responsible-parties" placeholder="e.g., John Doe (QA), Jane Smith (Manufacturing)" class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+        </form>
+
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between pt-6 border-t">
+            <button id="prev-btn" class="bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Previous
+            </button>
+            <button id="next-btn" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700">
+                Next
+            </button>
+            <button id="submit-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 hidden">
+                Submit Event
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- State Management ---
+            let currentStep = 1;
+            const totalSteps = 3;
+            const stepNames = ["Event Details", "Classification & Impact", "Attachments & Submission"];
+
+            // --- Element References ---
+            const progressBar = document.getElementById('progress-bar');
+            const currentStepText = document.getElementById('current-step-text');
+            const stepNameText = document.getElementById('step-name');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const form = document.getElementById('qms-wizard-form');
+
+            // --- Functions ---
+            const updateUI = () => {
+                // Update progress bar
+                progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+                
+                // Update text
+                currentStepText.textContent = currentStep;
+                stepNameText.textContent = stepNames[currentStep - 1];
+
+                // Show/hide form steps
+                for (let i = 1; i <= totalSteps; i++) {
+                    document.getElementById(`step-${i}`).classList.toggle('hidden', i !== currentStep);
+                }
+
+                // Update button states
+                prevBtn.disabled = currentStep === 1;
+                nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+                submitBtn.classList.toggle('hidden', currentStep !== totalSteps);
+            };
+
+            const validateStep = () => {
+                const currentStepDiv = document.getElementById(`step-${currentStep}`);
+                const inputs = currentStepDiv.querySelectorAll('input[type="text"], select, textarea');
+                let isValid = true;
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        input.classList.add('border-red-500');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('border-red-500');
+                    }
+                });
+                if (currentStep === 2) {
+                    const severity = form.querySelector('input[name="severity"]:checked');
+                    const priority = form.querySelector('input[name="priority"]:checked');
+                    if (!severity || !priority) isValid = false;
+                }
+                return isValid;
+            };
+
+            // --- Event Listeners ---
+            nextBtn.addEventListener('click', () => {
+                if (validateStep() && currentStep < totalSteps) {
+                    currentStep++;
+                    updateUI();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+
+            submitBtn.addEventListener('click', () => {
+                // In a real application, you would serialize the form data and send it to the backend.
+                // For this mockup, we'll just log it.
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                console.log('Form Submitted:', data);
+                alert('QMS Event Submitted Successfully! (Check console for data)');
+            });
+
+            // Initial UI setup
+            updateUI();
+        });
+    </script>
+
+</body>
+</html>
